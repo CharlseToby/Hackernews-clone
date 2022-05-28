@@ -1,0 +1,47 @@
+import React from "react";
+import { StoryType } from '../hooks/useAxios'
+
+interface LinkProps {
+  url: string,
+  title: string,
+}
+const Link = ({ url, title}: LinkProps) => (
+  <a href={url} target="_blank" rel="noreferrer">{title}</a>
+);
+
+
+const Story = (props: any) => {
+  const {id, by, title, kids, time, url} = props.story.data;
+  // console.log(props.story.data);
+  // console.log(id, by, title);
+  
+  
+
+  return(
+    <div className="story">
+      <div className="story-title">
+        <Link url={url} title={title} />
+      </div>
+      <div className="story-info">
+        <span>
+          by{' '}
+          <Link url={`https://news.ycombinator.com/user?id=${by}`} title={by} />
+        </span>
+        |<span>
+          {new Date(time * 1000).toLocaleDateString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric'
+          })}
+        </span>|
+        <span>
+          <Link
+            url={`https://news.ycombinator.com/item?id=${id}`}
+            title={`${kids && kids.length > 0 ? kids.length : 0} comments`}
+          />
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export default Story
